@@ -28,7 +28,7 @@ Documentation = "https://github.com/AndreaBellomia/jet-worker/tree/main/docs"
 
 [dependency-groups]
 dev = [
-  "mypy>=1.15,<2",
+  "mypy>=1.15,<3",
   "packaging>=24,<27",
   "pytest>=8.3,<10",
   "pytest-asyncio>=1,<2",
