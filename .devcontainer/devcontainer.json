@@ -1,0 +1,16 @@
+{
+  "name": "jet-worker",
+  "dockerComposeFile": ["../compose.yaml"],
+  "service": "editor",
+  "runServices": ["nats", "editor"],
+  "workspaceFolder": "/app",
+  "shutdownAction": "stopCompose",
+  "overrideCommand": false,
+  "remoteUser": "app",
+  "updateRemoteUserUID": true,
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "charliermarsh.ruff", "EditorConfig.EditorConfig"]
+    }
+  }
+}

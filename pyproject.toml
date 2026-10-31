@@ -1,0 +1,89 @@
+[build-system]
+requires = ["hatchling==1.33.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jet-worker"
+version = "0.0.0"
+description = "Repository foundation for a Python NATS JetStream worker library."
+readme = "README.md"
+requires-python = ">=3.13"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Andrea Bellomia" }]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/AndreaBellomia/jet-worker"
+Issues = "https://github.com/AndreaBellomia/jet-worker/issues"
+Documentation = "https://github.com/AndreaBellomia/jet-worker/tree/main/docs"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.15,<2",
+  "packaging>=24,<27",
+  "pytest>=8.3,<10",
+  "pytest-asyncio>=1,<2",
+  "pytest-cov>=6,<8",
+  "ruff>=0.11,<1",
+  "twine>=6.2,<8",
+  "watchfiles>=1,<2",
+]
+integration = ["nats-py>=2.10,<3"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jet_worker"]
+core-metadata-version = "2.4"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src", "tests", "tools", "docs", "pyproject.toml", "README.md",
+  "CONTRIBUTING.md", "AGENTS.md", "CHANGELOG.md", "SECURITY.md", "LICENSE", "NOTICE",
+]
+core-metadata-version = "2.4"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "N", "A", "ASYNC", "S", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["src", "tests", "tools"]
+warn_unreachable = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --strict-config"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = ["error"]
+markers = ["integration: requires real NATS servers supplied by Docker Compose"]
+
+[tool.coverage.run]
+branch = true
+source = ["jet_worker"]
+relative_files = true
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_empty = true
+precision = 2

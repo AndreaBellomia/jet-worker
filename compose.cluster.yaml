@@ -1,0 +1,31 @@
+services:
+  nats:
+    command:
+      - --name=seed
+      - --jetstream
+      - --store_dir=/data
+      - --http_port=8222
+      - --cluster=nats://0.0.0.0:6222
+      - --cluster_name=jet-worker
+      - --routes=nats://nats-node:6222
+
+  nats-node:
+    image: nats:2.15.2-alpine
+    profiles: [cluster]
+    entrypoint: [/bin/sh, -ec]
+    command:
+      - >-
+        exec nats-server --name="$$HOSTNAME" --jetstream --store_dir=/data
+        --http_port=8222 --cluster=nats://0.0.0.0:6222 --cluster_name=jet-worker
+        --routes=nats://nats:6222
+    volumes:
+      - /data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8222/healthz"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+    stop_grace_period: 15s
+    depends_on:
+      nats:
+        condition: service_started

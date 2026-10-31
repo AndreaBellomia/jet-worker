@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+uv sync --locked --all-groups
+exec "$@"
