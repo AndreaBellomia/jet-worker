@@ -33,7 +33,7 @@ jobs:
         env:
           PYTHON_VERSION: ${{ matrix.python }}
       - name: Store distributions
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: dist-${{ matrix.python }}
           path: dist/*
@@ -41,7 +41,7 @@ jobs:
           retention-days: 7
       - name: Store coverage
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: coverage-${{ matrix.python }}
           path: reports/coverage.xml
@@ -81,7 +81,7 @@ jobs:
           PYTHON_VERSION: ${{ matrix.python }}
       - name: Store security reports
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: security-reports-${{ matrix.python }}
           path: reports/trivy-*.json
